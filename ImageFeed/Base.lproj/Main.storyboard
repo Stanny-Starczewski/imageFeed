@@ -1,48 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ImageList-->
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Oo-bl-DRN">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" red="0.10196078431372549" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </tableView>
-                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="1Oo-bl-DRN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="FKY-eI-cbQ"/>
-                            <constraint firstItem="1Oo-bl-DRN" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="jVa-gv-Tc7"/>
-                            <constraint firstItem="1Oo-bl-DRN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="lMD-EA-62C"/>
-                            <constraint firstItem="1Oo-bl-DRN" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="m1B-Bt-rSf"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="tableView" destination="1Oo-bl-DRN" id="T2t-IX-HFK"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="22.137404580152669" y="-2.1126760563380285"/>
         </scene>
     </scenes>
-    <resources>
-        <namedColor name="YP Black">
-            <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-    </resources>
 </document>
