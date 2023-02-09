@@ -171,6 +171,7 @@
                                             <outlet property="cellImage" destination="s8s-og-ijv" id="vP1-EW-i10"/>
                                             <outlet property="dateLabel" destination="wtT-Ka-1uh" id="7yQ-Xu-IDI"/>
                                             <outlet property="likeButton" destination="lUV-0V-4G0" id="6r4-hA-Y9e"/>
+                                            <segue destination="gkc-ga-DHU" kind="show" id="W3U-tP-HMs"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -196,7 +197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="194.6564885496183" y="-654.22535211267609"/>
+            <point key="canvasLocation" x="120" y="-654"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XxG-Nn-YAf">
@@ -221,6 +222,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Glb-cm-W7Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-732.06106870229007" y="-654.22535211267609"/>
+        </scene>
+        <!--SingleImageViewController-->
+        <scene sceneID="Ryf-2w-6FE">
+            <objects>
+                <viewController id="gkc-ga-DHU" userLabel="SingleImageViewController" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Aep-GS-yqk">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-di-blx">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="d5r-u7-e8B"/>
+                        <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="d5r-u7-e8B" firstAttribute="top" secondItem="1U6-di-blx" secondAttribute="top" id="3Ek-oO-iMN"/>
+                            <constraint firstItem="1U6-di-blx" firstAttribute="leading" secondItem="d5r-u7-e8B" secondAttribute="leading" id="84F-7l-4Qm"/>
+                            <constraint firstItem="1U6-di-blx" firstAttribute="bottom" secondItem="d5r-u7-e8B" secondAttribute="bottom" id="JeN-k5-zmm"/>
+                            <constraint firstItem="d5r-u7-e8B" firstAttribute="trailing" secondItem="1U6-di-blx" secondAttribute="trailing" id="Qm6-c6-sYY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="BaS-CQ-MDc"/>
+                    <connections>
+                        <outlet property="imageView" destination="1U6-di-blx" id="IGu-Yq-w3h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4VY-vf-RG1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="950" y="-654"/>
         </scene>
     </scenes>
     <resources>

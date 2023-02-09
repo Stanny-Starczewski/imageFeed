@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		291ED289299458C4003C17F8 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED288299458C4003C17F8 /* SingleImageViewController.swift */; };
 		296DE704297DB6B0008B8030 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296DE703297DB6B0008B8030 /* AppDelegate.swift */; };
 		296DE706297DB6B0008B8030 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296DE705297DB6B0008B8030 /* SceneDelegate.swift */; };
 		296DE708297DB6B0008B8030 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296DE707297DB6B0008B8030 /* ImagesListViewController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		291ED288299458C4003C17F8 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		296DE700297DB6B0008B8030 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		296DE703297DB6B0008B8030 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		296DE705297DB6B0008B8030 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,12 +88,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		291ED28B299463DB003C17F8 /* SingelImageView */ = {
+			isa = PBXGroup;
+			children = (
+				291ED288299458C4003C17F8 /* SingleImageViewController.swift */,
+			);
+			name = SingelImageView;
+			sourceTree = "<group>";
+		};
 		296DE6F7297DB6B0008B8030 = {
 			isa = PBXGroup;
 			children = (
 				29D03D9B299049F60020CF10 /* ProfileView */,
 				29EE13CD298C9313008C0C66 /* Helpers */,
 				29CCA386298474B8002A53BC /* ImagesList */,
+				291ED28B299463DB003C17F8 /* SingelImageView */,
 				296DE702297DB6B0008B8030 /* ImageFeed */,
 				296DE719297DB6B2008B8030 /* ImageFeedTests */,
 				296DE723297DB6B2008B8030 /* ImageFeedUITests */,
@@ -300,6 +311,7 @@
 				296DE708297DB6B0008B8030 /* ImagesListViewController.swift in Sources */,
 				29EE13CF298C933A008C0C66 /* UIColor+Extensions.swift in Sources */,
 				29CCA38829847525002A53BC /* ImagesListCell.swift in Sources */,
+				291ED289299458C4003C17F8 /* SingleImageViewController.swift in Sources */,
 				29D03D98299038940020CF10 /* ProfileViewController.swift in Sources */,
 				296DE704297DB6B0008B8030 /* AppDelegate.swift in Sources */,
 				296DE706297DB6B0008B8030 /* SceneDelegate.swift in Sources */,
