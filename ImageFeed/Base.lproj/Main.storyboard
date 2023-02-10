@@ -192,7 +192,7 @@
                     <navigationItem key="navigationItem" id="Xdb-SJ-cTs"/>
                     <connections>
                         <outlet property="tableView" destination="1Oo-bl-DRN" id="T2t-IX-HFK"/>
-                        <segue destination="gkc-ga-DHU" kind="show" identifier="ShowSingleImage" id="ZIq-Xn-3kg"/>
+                        <segue destination="gkc-ga-DHU" kind="presentation" identifier="ShowSingleImage" id="ZIq-Xn-3kg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -226,23 +226,37 @@
         <!--SingleImageViewController-->
         <scene sceneID="Ryf-2w-6FE">
             <objects>
-                <viewController id="gkc-ga-DHU" userLabel="SingleImageViewController" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="gkc-ga-DHU" userLabel="SingleImageViewController" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Aep-GS-yqk">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-di-blx">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oH-t5-dAD">
+                                <rect key="frame" x="8" y="67" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="66B-wC-jqq"/>
+                                    <constraint firstAttribute="width" constant="44" id="Hiz-Qx-174"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="Backward"/>
+                                <connections>
+                                    <action selector="didTapBackButton" destination="gkc-ga-DHU" eventType="touchUpInside" id="enN-EJ-rcJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d5r-u7-e8B"/>
                         <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="d5r-u7-e8B" firstAttribute="top" secondItem="1U6-di-blx" secondAttribute="top" id="3Ek-oO-iMN"/>
-                            <constraint firstItem="1U6-di-blx" firstAttribute="leading" secondItem="d5r-u7-e8B" secondAttribute="leading" id="84F-7l-4Qm"/>
-                            <constraint firstItem="1U6-di-blx" firstAttribute="bottom" secondItem="d5r-u7-e8B" secondAttribute="bottom" id="JeN-k5-zmm"/>
-                            <constraint firstItem="d5r-u7-e8B" firstAttribute="trailing" secondItem="1U6-di-blx" secondAttribute="trailing" id="Qm6-c6-sYY"/>
+                            <constraint firstItem="2oH-t5-dAD" firstAttribute="leading" secondItem="d5r-u7-e8B" secondAttribute="leading" constant="8" id="Bqb-Dt-WhH"/>
+                            <constraint firstItem="1U6-di-blx" firstAttribute="top" secondItem="Aep-GS-yqk" secondAttribute="top" id="bmb-yj-Ph8"/>
+                            <constraint firstAttribute="bottom" secondItem="1U6-di-blx" secondAttribute="bottom" id="c3a-75-bol"/>
+                            <constraint firstItem="1U6-di-blx" firstAttribute="trailing" secondItem="Aep-GS-yqk" secondAttribute="trailing" id="pTk-gF-Gep"/>
+                            <constraint firstItem="1U6-di-blx" firstAttribute="leading" secondItem="Aep-GS-yqk" secondAttribute="leading" id="qKc-Li-zxj"/>
+                            <constraint firstItem="2oH-t5-dAD" firstAttribute="top" secondItem="d5r-u7-e8B" secondAttribute="top" constant="8" id="yIp-88-SCJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="BaS-CQ-MDc"/>
@@ -258,6 +272,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="Active" width="30" height="26"/>
+        <image name="Backward" width="24" height="24"/>
         <image name="ExitImage" width="20" height="22"/>
         <image name="Userpick" width="70" height="70"/>
         <image name="tab_editorial_active" width="30" height="30"/>
