@@ -263,6 +263,14 @@
                                     <action selector="didTapBackButton" destination="gkc-ga-DHU" eventType="touchUpInside" id="enN-EJ-rcJ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4o-er-YMc">
+                                <rect key="frame" x="171.66666666666666" y="732" width="50" height="50"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="SharingImage"/>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="gkc-ga-DHU" eventType="touchUpInside" id="t55-9C-Ar0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d5r-u7-e8B"/>
                         <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -271,8 +279,10 @@
                             <constraint firstItem="2oH-t5-dAD" firstAttribute="leading" secondItem="d5r-u7-e8B" secondAttribute="leading" constant="8" id="Bqb-Dt-WhH"/>
                             <constraint firstAttribute="bottom" secondItem="fl7-Tp-M4E" secondAttribute="bottom" id="Nam-9H-GXd"/>
                             <constraint firstItem="d5r-u7-e8B" firstAttribute="trailing" secondItem="fl7-Tp-M4E" secondAttribute="trailing" id="chM-80-Nl8"/>
+                            <constraint firstItem="d5r-u7-e8B" firstAttribute="bottom" secondItem="C4o-er-YMc" secondAttribute="bottom" constant="36" id="tZy-ex-5eu"/>
                             <constraint firstItem="2oH-t5-dAD" firstAttribute="top" secondItem="d5r-u7-e8B" secondAttribute="top" constant="8" id="yIp-88-SCJ"/>
                             <constraint firstItem="fl7-Tp-M4E" firstAttribute="leading" secondItem="d5r-u7-e8B" secondAttribute="leading" id="zUO-xx-9Gq"/>
+                            <constraint firstItem="C4o-er-YMc" firstAttribute="centerX" secondItem="d5r-u7-e8B" secondAttribute="centerX" id="zZ6-ys-SzP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="BaS-CQ-MDc"/>
@@ -291,6 +301,7 @@
         <image name="Active" width="30" height="26"/>
         <image name="Backward" width="24" height="24"/>
         <image name="ExitImage" width="20" height="22"/>
+        <image name="SharingImage" width="50" height="50"/>
         <image name="Userpick" width="70" height="70"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
