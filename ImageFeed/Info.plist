@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-Pro</string>
+		<string>SF-Pro-Bold</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
