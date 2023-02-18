@@ -1,52 +1,68 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    private var nameLabel: UILabel?
-    private var nicknameLabel: UILabel?
-    private var textLabel: UILabel?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let profileImage = UIImage(named: "Novikova_Profile")
+    private let profileImage = UIImage(named: "Novikova_Profile")
+    
+    private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
-        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var nameLabel : UILabel = {
         let nameLabel = UILabel()
         nameLabel.text = "Екатерина Новикова"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
         nameLabel.textColor = .ypWhite
-        self.nameLabel = nameLabel
-        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        return nameLabel
+    }()
+    
+    private lazy var nicknameLabel : UILabel = {
         let nicknameLabel = UILabel()
         nicknameLabel.text = "@ekaterina_nov"
         nicknameLabel.font = UIFont.systemFont(ofSize: 13)
         nicknameLabel.textColor = .ypGrey
-        self.nicknameLabel = nicknameLabel
-        
+        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
+        return nicknameLabel
+    }()
+    
+    private lazy var textLabel : UILabel = {
         let textLabel = UILabel()
-        textLabel.text = "Hello, world"
+        textLabel.text = "Hello, world!"
         textLabel.font = UIFont.systemFont(ofSize: 13)
         textLabel.textColor = .ypWhite
-        self.textLabel = textLabel
-        
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        return textLabel
+    }()
+    
+    private lazy var button : UIButton = {
         let button = UIButton.systemButton(
             with: UIImage(systemName: "ipad.and.arrow.forward")!,
             target: self,
-            action: #selector(Self.didTapButton))
+            action: #selector(self.didTapButton))
         button.tintColor = .ypRed
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        return button
+    }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureViews()
+        configureConstraints()
+    }
+    
+    private func configureViews() {
         view.addSubview(imageView)
         view.addSubview(nameLabel)
         view.addSubview(nicknameLabel)
         view.addSubview(textLabel)
         view.addSubview(button)
-        
+    }
+    
+    private func configureConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -61,14 +77,10 @@ class ProfileViewController: UIViewController {
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
         ])
+        
     }
     @objc
     private func didTapButton() {
-        nameLabel?.removeFromSuperview()
-        nameLabel = nil
-        nicknameLabel?.removeFromSuperview()
-        nicknameLabel = nil
-        textLabel?.removeFromSuperview()
-        textLabel = nil
+        
     }
 }

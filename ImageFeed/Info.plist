@@ -3,10 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>UIAppFonts</key>
-	<array>
-		<string>SF-Pro</string>
-		<string>SF-Pro-Bold</string>
-	</array>
+	<array/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
