@@ -21,6 +21,7 @@
 		29D03D98299038940020CF10 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03D97299038940020CF10 /* ProfileViewController.swift */; };
 		29D03D99299038940020CF10 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03D97299038940020CF10 /* ProfileViewController.swift */; };
 		29D03D9A299038940020CF10 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03D97299038940020CF10 /* ProfileViewController.swift */; };
+		29DF9AB529A7F267002ABC6E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF9AB429A7F267002ABC6E /* Constants.swift */; };
 		29EE13CF298C933A008C0C66 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE13CE298C933A008C0C66 /* UIColor+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		296DE726297DB6B2008B8030 /* ImageFeedUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		29CCA38729847525002A53BC /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		29D03D97299038940020CF10 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		29DF9AB429A7F267002ABC6E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		29EE13CE298C933A008C0C66 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,18 +94,13 @@
 				291ED288299458C4003C17F8 /* SingleImageViewController.swift */,
 			);
 			name = SingelImageView;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		296DE6F7297DB6B0008B8030 = {
 			isa = PBXGroup;
 			children = (
-				29D03D9B299049F60020CF10 /* ProfileView */,
-				29EE13CD298C9313008C0C66 /* Helpers */,
-				29CCA386298474B8002A53BC /* ImagesList */,
-				291ED28B299463DB003C17F8 /* SingelImageView */,
 				296DE702297DB6B0008B8030 /* ImageFeed */,
-				296DE719297DB6B2008B8030 /* ImageFeedTests */,
-				296DE723297DB6B2008B8030 /* ImageFeedUITests */,
 				296DE701297DB6B0008B8030 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +120,13 @@
 			children = (
 				296DE703297DB6B0008B8030 /* AppDelegate.swift */,
 				296DE705297DB6B0008B8030 /* SceneDelegate.swift */,
+				29DF9AB429A7F267002ABC6E /* Constants.swift */,
+				29D03D9B299049F60020CF10 /* ProfileView */,
+				29EE13CD298C9313008C0C66 /* Helpers */,
+				29CCA386298474B8002A53BC /* ImagesList */,
+				291ED28B299463DB003C17F8 /* SingelImageView */,
+				296DE719297DB6B2008B8030 /* ImageFeedTests */,
+				296DE723297DB6B2008B8030 /* ImageFeedUITests */,
 				296DE709297DB6B0008B8030 /* Main.storyboard */,
 				296DE70C297DB6B1008B8030 /* Assets.xcassets */,
 				296DE70E297DB6B1008B8030 /* LaunchScreen.storyboard */,
@@ -311,6 +315,7 @@
 				29D03D98299038940020CF10 /* ProfileViewController.swift in Sources */,
 				296DE704297DB6B0008B8030 /* AppDelegate.swift in Sources */,
 				296DE706297DB6B0008B8030 /* SceneDelegate.swift in Sources */,
+				29DF9AB529A7F267002ABC6E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
