@@ -293,12 +293,19 @@
                                     <action selector="didTapBackButton:" destination="j0z-25-Yxq" eventType="touchUpInside" id="dN0-zd-5Yc"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="K0M-T5-Uky">
+                                <rect key="frame" x="0.0" y="103" width="393" height="4"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5HZ-Yp-7c6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="tp9-CX-xDo" secondAttribute="bottom" id="6bd-nU-e3t"/>
+                            <constraint firstItem="K0M-T5-Uky" firstAttribute="leading" secondItem="ILc-nZ-SRM" secondAttribute="leading" id="9Zu-5N-sJE"/>
                             <constraint firstItem="tp9-CX-xDo" firstAttribute="trailing" secondItem="ILc-nZ-SRM" secondAttribute="trailing" id="AEj-Xi-lTf"/>
+                            <constraint firstAttribute="trailing" secondItem="K0M-T5-Uky" secondAttribute="trailing" id="DCP-n3-iSq"/>
+                            <constraint firstItem="K0M-T5-Uky" firstAttribute="top" secondItem="5Yv-JP-dvx" secondAttribute="bottom" id="DgF-D3-QTx"/>
                             <constraint firstItem="5Yv-JP-dvx" firstAttribute="top" secondItem="5HZ-Yp-7c6" secondAttribute="top" id="Fal-gF-UEx"/>
                             <constraint firstItem="tp9-CX-xDo" firstAttribute="top" secondItem="ILc-nZ-SRM" secondAttribute="top" id="NGf-Ll-Qsb"/>
                             <constraint firstItem="5Yv-JP-dvx" firstAttribute="leading" secondItem="5HZ-Yp-7c6" secondAttribute="leading" id="ZPA-nQ-JlJ"/>
@@ -306,6 +313,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressView" destination="K0M-T5-Uky" id="S15-sm-BF3"/>
                         <outlet property="webView" destination="tp9-CX-xDo" id="RJy-rj-S2E"/>
                     </connections>
                 </viewController>
