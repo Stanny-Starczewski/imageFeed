@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wES-xN-54Z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FCN-nG-3Bc">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -13,7 +13,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ane-9O-qx5">
             <objects>
-                <tabBarController id="wQh-Y2-NpB" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="wQh-Y2-NpB" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="WHg-Zl-aSm"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jsf-5o-Azp">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -31,7 +31,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l2A-l6-NIw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1573" y="-460"/>
+            <point key="canvasLocation" x="-1573" y="-144"/>
         </scene>
         <!--ProfileView-->
         <scene sceneID="DQg-Zy-VYR">
@@ -48,7 +48,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wS7-aM-T8z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="196.18320610687022" y="0.0"/>
+            <point key="canvasLocation" x="-712" y="256"/>
         </scene>
         <!--ImageList-->
         <scene sceneID="tne-QT-ifu">
@@ -263,7 +263,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VX7-mK-jgE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2520" y="187"/>
+            <point key="canvasLocation" x="-712" y="-1342"/>
         </scene>
         <!--Web View View Controller-->
         <scene sceneID="JR6-Pb-8sW">
@@ -319,7 +319,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="698-PW-yQM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1677.0992366412213" y="186.61971830985917"/>
+            <point key="canvasLocation" x="218" y="-1342"/>
+        </scene>
+        <!--Unsplash-->
+        <scene sceneID="8O3-aj-cEa">
+            <objects>
+                <viewController storyboardIdentifier="SplashViewController" id="FCN-nG-3Bc" userLabel="Unsplash" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wNs-mL-pVa">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vector" translatesAutoresizingMaskIntoConstraints="NO" id="KYo-nO-yJe">
+                                <rect key="frame" x="159" y="399.66666666666669" width="75" height="78"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xt6-U8-S5a"/>
+                        <color key="backgroundColor" name="YP Black"/>
+                        <constraints>
+                            <constraint firstItem="KYo-nO-yJe" firstAttribute="centerY" secondItem="xt6-U8-S5a" secondAttribute="centerY" id="368-48-hS9"/>
+                            <constraint firstItem="KYo-nO-yJe" firstAttribute="centerX" secondItem="xt6-U8-S5a" secondAttribute="centerX" id="ilG-cs-ENL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="wES-xN-54Z" kind="presentation" identifier="ShowAuthenticationScreen" modalPresentationStyle="overFullScreen" id="Wud-8b-dbE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ssV-AH-9vQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2423" y="-1095"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GTs-Tg-1fT">
@@ -337,7 +364,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="anm-N2-Q4j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3370" y="187"/>
+            <point key="canvasLocation" x="-1573" y="-1342"/>
         </scene>
     </scenes>
     <resources>
@@ -345,6 +372,7 @@
         <image name="Active" width="30" height="26"/>
         <image name="Backward" width="24" height="24"/>
         <image name="SharingImage" width="50" height="50"/>
+        <image name="Vector" width="75" height="78"/>
         <image name="auth_screen_logo" width="60" height="60"/>
         <image name="nav_back_button" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
