@@ -5,16 +5,21 @@ final class OAuth2TokenStorage {
     static let shared = OAuth2TokenStorage()
     private let defaults = UserDefaults.standard
     
+    private enum Keys: String {
+        case token
+    }
+    
     var token: String? {
         get {
-            defaults.string(forKey: "bearerToken")
+            defaults.string(forKey: Keys.token.rawValue)
         }
         set {
-            if let token = newValue {
-                defaults.set(newValue, forKey: "bearerToken")
-            } else {
-                defaults.removeObject(forKey: "bearerToken")
+            defaults.set(newValue, forKey: Keys.token.rawValue)
             }
         }
+    
+    init() {}
+    
     }
-}
+
+

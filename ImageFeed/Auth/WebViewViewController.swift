@@ -1,20 +1,14 @@
 import UIKit
 import WebKit
 
-private struct APIConstants {
-    static let authorizeURLString = "https://unsplash.com/oauth/authorize"
-    static let code = "code"
-    static let authorizationPath = "/oauth/authorize/native"
-}
-
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
 }
 
 final class WebViewViewController: UIViewController {
-    @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet private weak var webView: WKWebView!
+    @IBOutlet private weak var progressView: UIProgressView!
     
     weak var delegate: WebViewViewControllerDelegate?
     
@@ -57,7 +51,7 @@ final class WebViewViewController: UIViewController {
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
     
-    @IBAction func didTapBackButton(_ sender: Any) {
+    @IBAction private func didTapBackButton(_ sender: Any) {
         delegate?.webViewViewControllerDidCancel(self)
     }
 }
@@ -80,10 +74,10 @@ extension WebViewViewController: WKNavigationDelegate {
 private extension WebViewViewController {
     func loadWebView() {
         var components = URLComponents(string: APIConstants.authorizeURLString)
-        components?.queryItems = [URLQueryItem(name: "client_id", value: AccessKey),
-                                  URLQueryItem(name: "redirect_uri", value: RedirectURI),
+        components?.queryItems = [URLQueryItem(name: "client_id", value: APIConstants.accessKey),
+                                  URLQueryItem(name: "redirect_uri", value: APIConstants.redirectURI),
                                   URLQueryItem(name: "response_type", value: APIConstants.code),
-                                  URLQueryItem(name: "scope", value: AccessScope)]
+                                  URLQueryItem(name: "scope", value: APIConstants.accessScope)]
         if let url = components?.url {
             let request = URLRequest(url: url)
             webView.load(request)

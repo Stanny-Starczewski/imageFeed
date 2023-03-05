@@ -34,13 +34,13 @@ final class OAuth2Service {
 private func authTokenRequest(code: String) -> URLRequest {
     URLRequest.makeHTTPRequest(
         path: "/oauth/token"
-        + "?client_id=\(AccessKey)"
-        + "&&client_secret=\(SecretKey)"
-        + "&&redirect_uri=\(RedirectURI)"
+        + "?client_id=\(APIConstants.accessKey)"
+        + "&&client_secret=\(APIConstants.secretKey)"
+        + "&&redirect_uri=\(APIConstants.redirectURI)"
         + "&&code=\(code)"
         + "&&grant_type=authorization_code",
         httpMethod: "POST",
-        baseURL: URL(string: "https://unsplash.com")!
+        baseURL: URL(string: "\(APIConstants.baseURL)")!
     )}
 
 // MARK: - Decoding
@@ -61,12 +61,12 @@ struct OAuthTokenResponseBody: Decodable {
 
 extension OAuth2Service {
     private func object(for request: URLRequest, completion: @escaping(Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
-        
-        return urlSession.data(for: request) {(result: Result<Data, Error>) in
+        let decoder = JSONDecoder()
+        return urlSession.data(for: request, complition: {(result: Result<Data, Error>) in
             switch result {
             case .success(let data):
                 do {
-                    let object = try self.decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    let object = try decoder.decode(OAuthTokenResponseBody.self, from: data)
                     completion(.success(object))
                 } catch {
                     completion(.failure(error))
@@ -74,14 +74,14 @@ extension OAuth2Service {
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
+        })
     }
 }
 
 // MARK: - HTTP Request
 
 extension URLRequest {
-    static func makeHTTPRequest(path: String, httpMethod: String, baseURL: URL = DefaultBaseURL) -> URLRequest {
+    static func makeHTTPRequest(path: String, httpMethod: String, baseURL: URL = APIConstants.defaultBaseURL) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
         return request
