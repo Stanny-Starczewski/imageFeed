@@ -3,7 +3,6 @@ import Foundation
 final class OAuth2Service {
     static let shared = OAuth2Service()
     private let urlSession = URLSession.shared
-    private let decoder = JSONDecoder()
     private let tokenStorage = OAuth2TokenStorage.shared
     private (set) var authToken: String? {
         get {
@@ -61,12 +60,11 @@ struct OAuthTokenResponseBody: Decodable {
 
 extension OAuth2Service {
     private func object(for request: URLRequest, completion: @escaping(Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request, complition: {(result: Result<Data, Error>) in
+        return urlSession.data(for: request, completion: {(result: Result<Data, Error>) in
             switch result {
             case .success(let data):
                 do {
-                    let object = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    let object = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
                     completion(.success(object))
                 } catch {
                     completion(.failure(error))
@@ -99,11 +97,11 @@ enum NetworkError: Error {
 }
 
 extension URLSession {
-    func data(for request: URLRequest, complition: @escaping(Result<Data, Error>) -> Void) -> URLSessionTask {
+    func data(for request: URLRequest, completion: @escaping(Result<Data, Error>) -> Void) -> URLSessionTask {
         
         let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
             DispatchQueue.main.async {
-                complition(result)
+                completion(result)
             }
         }
         

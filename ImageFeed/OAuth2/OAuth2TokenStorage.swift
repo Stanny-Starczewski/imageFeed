@@ -15,11 +15,8 @@ final class OAuth2TokenStorage {
         }
         set {
             defaults.set(newValue, forKey: Keys.token.rawValue)
-            }
         }
-    
-    init() {}
-    
     }
+}
 
 
