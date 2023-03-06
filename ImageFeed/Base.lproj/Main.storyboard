@@ -226,17 +226,17 @@
                                     <constraint firstAttribute="width" constant="60" id="bv1-2t-IZA"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf3-O0-xJw" userLabel="LoginButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf3-O0-xJw" userLabel="LoginButton">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="4eC-ZX-fqt"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Войти">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
-                                    <color key="baseForegroundColor" name="YP Black"/>
-                                </buttonConfiguration>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Войти">
+                                    <color key="titleColor" name="YP Black"/>
+                                </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="16"/>
@@ -274,7 +274,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tp9-CX-xDo">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="107" width="393" height="745"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -307,7 +307,7 @@
                             <constraint firstAttribute="trailing" secondItem="K0M-T5-Uky" secondAttribute="trailing" id="DCP-n3-iSq"/>
                             <constraint firstItem="K0M-T5-Uky" firstAttribute="top" secondItem="5Yv-JP-dvx" secondAttribute="bottom" id="DgF-D3-QTx"/>
                             <constraint firstItem="5Yv-JP-dvx" firstAttribute="top" secondItem="5HZ-Yp-7c6" secondAttribute="top" id="Fal-gF-UEx"/>
-                            <constraint firstItem="tp9-CX-xDo" firstAttribute="top" secondItem="ILc-nZ-SRM" secondAttribute="top" id="NGf-Ll-Qsb"/>
+                            <constraint firstItem="tp9-CX-xDo" firstAttribute="top" secondItem="K0M-T5-Uky" secondAttribute="bottom" id="NGf-Ll-Qsb"/>
                             <constraint firstItem="5Yv-JP-dvx" firstAttribute="leading" secondItem="5HZ-Yp-7c6" secondAttribute="leading" id="ZPA-nQ-JlJ"/>
                             <constraint firstItem="tp9-CX-xDo" firstAttribute="leading" secondItem="ILc-nZ-SRM" secondAttribute="leading" id="sgo-Wx-Wtc"/>
                         </constraints>
@@ -319,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="698-PW-yQM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="218" y="-1342"/>
+            <point key="canvasLocation" x="217.55725190839695" y="-1342.2535211267607"/>
         </scene>
         <!--Unsplash-->
         <scene sceneID="8O3-aj-cEa">

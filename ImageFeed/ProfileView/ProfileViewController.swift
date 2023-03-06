@@ -83,4 +83,8 @@ class ProfileViewController: UIViewController {
     private func didTapButton() {
         
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
