@@ -72,7 +72,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.switchToTabBarController()
                 ProgressHUD.dismiss()
             case .failure:
-                //TODO: [Sprint 11] показать ошибку TEST test
+                //TODO: [Sprint 11] показать ошибку 
                 break
             }
         }
