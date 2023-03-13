@@ -1,7 +1,8 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
+    private let storageToken = OAuth2TokenStorage()
+    private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "Novikova_Profile")
     
     private lazy var imageView : UIImageView = {
@@ -52,6 +53,13 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         configureViews()
         configureConstraints()
+        updateProfileDetails(profile: profileService.profile!)
+    }
+    
+    private func updateProfileDetails(profile: Profile) {
+        nameLabel.text = profile.name
+        nicknameLabel.text = profile.loginName
+        textLabel.text = profile.bio
     }
     
     private func configureViews() {
