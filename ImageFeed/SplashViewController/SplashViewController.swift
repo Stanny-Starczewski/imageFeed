@@ -70,8 +70,9 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
-                self.switchToTabBarController()
+            case .success(let token):
+                self.fetchProfile(token: token)
+                //self.switchToTabBarController()
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 //TODO: [Sprint 11] показать ошибку //
