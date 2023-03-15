@@ -6,12 +6,6 @@ class ProfileViewController: UIViewController {
     private let profileImage = UIImage(named: "Novikova_Profile")
     private var profileImageServiceObserver: NSObjectProtocol?
     
-//    private lazy var avatarImageView: UIImageView = {
-//        let imageView = UIImageView(image: UIImage(named: "avatar"))
-//        imageView.tag = 1
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
