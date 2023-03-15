@@ -4,6 +4,7 @@ import ProgressHUD
 final class SplashViewController: UIViewController {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     
@@ -59,9 +60,9 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
+            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
         }
     }
@@ -72,9 +73,8 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success(let token):
                 self.fetchProfile(token: token)
-                //self.switchToTabBarController()
-                UIBlockingProgressHUD.dismiss()
             case .failure:
+                UIBlockingProgressHUD.dismiss()
                 //TODO: [Sprint 11] показать ошибку //
                 break
             }
@@ -86,10 +86,13 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                //self.profileImageService.fetchProfileImageURL(token, username: profile.userName, completion: nil)
+                UIBlockingProgressHUD.dismiss()
+                self.profileImageService.fetchProfileImageURL(token, username: (self.profileService.profile?.username)!) { _ in
+                                     }
                 //UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
             case .failure:
+                UIBlockingProgressHUD.dismiss()
                 //UIBlockingProgressHUD.dismiss()
                 break
             }

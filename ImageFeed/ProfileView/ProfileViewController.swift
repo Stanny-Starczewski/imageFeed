@@ -4,9 +4,19 @@ class ProfileViewController: UIViewController {
     private let storageToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "Novikova_Profile")
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+//    private lazy var avatarImageView: UIImageView = {
+//        let imageView = UIImageView(image: UIImage(named: "avatar"))
+//        imageView.tag = 1
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        return imageView
+//    }()
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
+//        let profileImageView = UIImageView(image: profileImage)
+//        self.imageView = profileImageView
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -54,12 +64,28 @@ class ProfileViewController: UIViewController {
         configureViews()
         configureConstraints()
         updateProfileDetails(profile: profileService.profile!)
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.DidChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     private func updateProfileDetails(profile: Profile) {
         nameLabel.text = profile.name
         nicknameLabel.text = profile.loginName
         textLabel.text = profile.bio
+    }
+    
+    private func updateAvatar() {
+        guard let profileImageURL = ProfileImageService.shared.avatarURL,
+              let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
     
     private func configureViews() {
