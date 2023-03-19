@@ -72,10 +72,13 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success(let token):
+                print("token - \(token)")
+                self.switchToTabBarController()
+                self.oauth2TokenStorage.token = token
                 self.fetchProfile(token: token)
-            case .failure:
+            case .failure (let error):
                 UIBlockingProgressHUD.dismiss()
-                //TODO: [Sprint 11] показать ошибку //
+                self.showAlert(with: error)
                 break
             }
         }
@@ -85,17 +88,21 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
+            case .success (let profile):
                 UIBlockingProgressHUD.dismiss()
-                self.profileImageService.fetchProfileImageURL(token, username: (self.profileService.profile?.username)!) { _ in
-                                     }
-                //UIBlockingProgressHUD.dismiss()
+                self.profileImageService.fetchProfileImageURL(token, username: (profile.username)) { _ in }
                 self.switchToTabBarController()
-            case .failure:
-                UIBlockingProgressHUD.dismiss()
-                //UIBlockingProgressHUD.dismiss()
-                break
+            case .failure (let error):
+                self.showAlert(with: error)
             }
         }
+    }
+    private func showAlert(with error: Error) {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так",
+            message: "Не удалось войти в систему. Проверьте ваше интернет соединение",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
     }
 }
