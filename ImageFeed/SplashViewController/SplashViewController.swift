@@ -62,8 +62,8 @@ extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
-            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
+            UIBlockingProgressHUD.show()
         }
     }
     
@@ -72,16 +72,14 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success(let token):
-                print("token - \(token)")
-                self.switchToTabBarController()
                 self.oauth2TokenStorage.token = token
                 self.fetchProfile(token: token)
             case .failure (let error):
-                UIBlockingProgressHUD.dismiss()
                 self.showAlert(with: error)
                 break
             }
         }
+        UIBlockingProgressHUD.dismiss()
     }
     
     private func fetchProfile(token: String) {
@@ -89,14 +87,18 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success (let profile):
-                UIBlockingProgressHUD.dismiss()
                 self.profileImageService.fetchProfileImageURL(token, username: (profile.username)) { _ in }
-                self.switchToTabBarController()
+                DispatchQueue.main.async {
+                    self.switchToTabBarController()
+                }
             case .failure (let error):
                 self.showAlert(with: error)
+                break
             }
         }
+        UIBlockingProgressHUD.dismiss()
     }
+    
     private func showAlert(with error: Error) {
         let alert = UIAlertController(
             title: "Что-то пошло не так",
