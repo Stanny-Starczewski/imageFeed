@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     private let storageToken = OAuth2TokenStorage()
@@ -9,8 +10,6 @@ class ProfileViewController: UIViewController {
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
-//        let profileImageView = UIImageView(image: profileImage)
-//        self.imageView = profileImageView
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -58,29 +57,23 @@ class ProfileViewController: UIViewController {
         configureViews()
         configureConstraints()
         updateProfileDetails(profile: profileService.profile!)
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
-            object: nil,
-            queue: .main) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
+        observeAvatarChanges()
+//        profileImageServiceObserver = NotificationCenter.default.addObserver(
+//            forName: ProfileImageService.DidChangeNotification,
+//            object: nil,
+//            queue: .main) { [weak self] _ in
+//                guard let self = self else { return }
+//                self.updateAvatar()
+//            }
+//        updateAvatar()
     }
-    
-    private func updateProfileDetails(profile: Profile) {
-        nameLabel.text = profile.name
-        nicknameLabel.text = profile.loginName
-        textLabel.text = profile.bio
-    }
-    
-    private func updateAvatar() {
-        guard let profileImageURL = ProfileImageService.shared.avatarURL,
-              let url = URL(string: profileImageURL)
-        else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
-    }
+  
+//    private func updateAvatar() {
+//        guard let profileImageURL = ProfileImageService.shared.avatarURL,
+//              let url = URL(string: profileImageURL)
+//        else { return }
+//        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+//    }
     
     private func configureViews() {
         view.addSubview(imageView)
@@ -114,5 +107,47 @@ class ProfileViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    
+}
+// MARK: - Update Profile data
+extension ProfileViewController {
+    private func updateProfileDetails(profile: Profile?) {
+        guard let profile = profile else { return }
+        nameLabel.text = profile.name
+        nicknameLabel.text = profile.loginName
+        textLabel.text = profile.bio
+    }
+}
+
+// MARK: - Notification
+extension ProfileViewController {
+    private func observeAvatarChanges() {
+        profileImageServiceObserver = NotificationCenter.default
+                    .addObserver(
+                        forName: ProfileImageService.DidChangeNotification,
+                        object: nil,
+                        queue: .main
+                    ) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.updateAvatar()
+                    }
+                updateAvatar()
+    }
+
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        imageView.kf.indicatorType = .activity
+        imageView.kf.setImage(with: url,
+                              placeholder: UIImage(named: "person.crop.circle.fill.png"),
+                              options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
+        let cache = ImageCache.default
+        cache.clearDiskCache()
+        cache.clearMemoryCache()
     }
 }

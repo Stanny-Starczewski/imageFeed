@@ -7,7 +7,7 @@ final class ProfileImageService {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-    private let storageToken = OAuth2TokenStorage().token
+    private let storageToken = OAuth2TokenStorage()
     private (set) var avatarURL: String?
     
     private enum NetworkError: Error {
@@ -19,14 +19,14 @@ final class ProfileImageService {
          if lastCode == token { return }
          task?.cancel()
          lastCode = token
-         let request = makeRequest(token: token, username: username)
+         let request = makeRequest(token: storageToken.token!, username: username)
          let session = URLSession.shared
          let task = session.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
              guard let self = self else { return }
              switch result {
              case .success(let decodedObject):
                  let avatarURL = ProfileImage(decodedData: decodedObject)
-                 self.avatarURL = avatarURL.profileImage["small"]
+                 self.avatarURL = avatarURL.profileImage["medium"]
                  completion(.success(self.avatarURL!))
                  NotificationCenter.default.post(
                      name: ProfileImageService.DidChangeNotification,
