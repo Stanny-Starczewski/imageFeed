@@ -75,6 +75,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.oauth2TokenStorage.token = token
                 self.fetchProfile(token: token)
             case .failure (let error):
+                UIBlockingProgressHUD.dismiss()
                 self.showAlert(with: error)
                 break
             }
@@ -86,8 +87,9 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success (let profile):
-                self.profileImageService.fetchProfileImageURL(token, username: (profile.username)) { _ in }
+            case .success:
+                guard let username = self.profileService.profile?.username else { return }
+                self.profileImageService.fetchProfileImageURL(username: username)  { _ in }
                 DispatchQueue.main.async {
                     self.switchToTabBarController()
                 }
@@ -95,8 +97,8 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.showAlert(with: error)
                 break
             }
+            UIBlockingProgressHUD.dismiss()
         }
-        UIBlockingProgressHUD.dismiss()
     }
     
     private func showAlert(with error: Error) {

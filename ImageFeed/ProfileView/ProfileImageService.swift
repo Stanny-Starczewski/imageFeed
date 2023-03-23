@@ -13,8 +13,9 @@ final class ProfileImageService {
 //    private enum NetworkError: Error {
 //         case codeError
 //     }
-
-     func fetchProfileImageURL(_ token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
+//    private init() {}
+    
+     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
          assert(Thread.isMainThread)
 //         if lastCode == token { return }
 //         task?.cancel()
@@ -26,7 +27,7 @@ final class ProfileImageService {
              switch result {
              case .success(let decodedObject):
                  let avatarURL = ProfileImage(decodedData: decodedObject)
-                 self.avatarURL = avatarURL.profileImage["medium"]
+                 self.avatarURL = avatarURL.profileImage["large"]
                  completion(.success(self.avatarURL!))
                  NotificationCenter.default.post(
                      name: ProfileImageService.DidChangeNotification,
@@ -50,7 +51,7 @@ final class ProfileImageService {
 
 struct UserResult: Codable {
     let profileImage: [String:String]
-    
+
     enum CodingKeys: String, CodingKey {
         case profileImage = "profile_image"
     }
@@ -58,7 +59,7 @@ struct UserResult: Codable {
 
 struct ProfileImage: Codable {
     let profileImage: [String:String]
-    
+
     init(decodedData: UserResult) {
         self.profileImage = decodedData.profileImage
     }

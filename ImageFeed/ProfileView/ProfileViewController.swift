@@ -4,9 +4,8 @@ import Kingfisher
 class ProfileViewController: UIViewController {
     private let storageToken = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
-    private let profileImage = UIImage(named: "avatar")
+    private let profileImage = UIImage(named: "Novikova_Profile")
     private var profileImageServiceObserver: NSObjectProtocol?
-    
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -114,7 +113,7 @@ class ProfileViewController: UIViewController {
 // MARK: - Update Profile data
 extension ProfileViewController {
     private func updateProfileDetails(profile: Profile?) {
-        guard let profile = profile else { return }
+        guard let profile = profileService.profile else { return }
         nameLabel.text = profile.name
         nicknameLabel.text = profile.loginName
         textLabel.text = profile.bio
@@ -141,7 +140,7 @@ extension ProfileViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        let processor = RoundCornerImageProcessor(cornerRadius: imageView.frame.width)
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: url,
                               placeholder: UIImage(named: "person.crop.circle.fill.png"),
