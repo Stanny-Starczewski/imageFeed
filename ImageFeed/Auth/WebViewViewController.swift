@@ -70,7 +70,7 @@ extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let code = fetchCode(from: navigationAction.request.url) {
+        if let code = fetchCode(from: navigationAction) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
@@ -92,11 +92,12 @@ private extension WebViewViewController {
         }
     }
 
-    func fetchCode(from url: URL?) -> String? {
-        if let url = url,
+    func fetchCode(from navigationAction: WKNavigationAction) -> String? {
+        if let url = navigationAction.request.url,
            let components = URLComponents(string: url.absoluteString),
            components.path == APIConstants.authorizationPath,
-           let codeItem = components.queryItems?.first(where: { $0.name == APIConstants.code }) {
+           let items = components.queryItems,
+           let codeItem = items.first(where: { $0.name == APIConstants.code }) {
             return codeItem.value
         } else {
             return nil

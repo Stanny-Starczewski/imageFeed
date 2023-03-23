@@ -6,19 +6,19 @@ final class ProfileImageService {
     static let shared = ProfileImageService()
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
-    private var lastCode: String?
+//    private var lastCode: String?
     private let storageToken = OAuth2TokenStorage()
     private (set) var avatarURL: String?
     
-    private enum NetworkError: Error {
-         case codeError
-     }
+//    private enum NetworkError: Error {
+//         case codeError
+//     }
 
      func fetchProfileImageURL(_ token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
          assert(Thread.isMainThread)
-         if lastCode == token { return }
-         task?.cancel()
-         lastCode = token
+//         if lastCode == token { return }
+//         task?.cancel()
+//         lastCode = token
          let request = makeRequest(token: storageToken.token!, username: username)
          let session = URLSession.shared
          let task = session.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in

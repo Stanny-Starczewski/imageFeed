@@ -101,8 +101,8 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     private func showAlert(with error: Error) {
         let alert = UIAlertController(
-            title: "Что-то пошло не так",
-            message: "Не удалось войти в систему. Проверьте ваше интернет соединение",
+            title: "Something went wrong",
+            message: "Failed to login. Check your internet connection",
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true, completion: nil)
