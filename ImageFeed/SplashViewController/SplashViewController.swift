@@ -45,10 +45,8 @@ final class SplashViewController: UIViewController {
         view.addSubview(logoImageView)
         
         NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: 77.68),
-            logoImageView.widthAnchor.constraint(equalToConstant: 75),
-            logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            logoImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)])
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
     }
     
     private func switchToTabBarController() {
