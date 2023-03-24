@@ -6,14 +6,6 @@ final class OAuth2Service {
     private let tokenStorage = OAuth2TokenStorage.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-    private (set) var authToken: String? {
-        get {
-            return tokenStorage.token
-        }
-        set {
-            tokenStorage.token = newValue
-        }
-    }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void ) {
         assert(Thread.isMainThread)
