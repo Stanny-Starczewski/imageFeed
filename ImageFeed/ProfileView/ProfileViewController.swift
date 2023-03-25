@@ -9,6 +9,8 @@ class ProfileViewController: UIViewController {
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -56,6 +58,7 @@ class ProfileViewController: UIViewController {
         configureViews()
         configureConstraints()
         updateProfileDetails(profile: profileService.profile!)
+        updateAvatar()
         observeAvatarChanges()
     }
     
@@ -92,8 +95,7 @@ class ProfileViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    
+
 }
 // MARK: - Update Profile data
 extension ProfileViewController {
@@ -109,17 +111,16 @@ extension ProfileViewController {
 extension ProfileViewController {
     private func observeAvatarChanges() {
         profileImageServiceObserver = NotificationCenter.default
-                    .addObserver(
-                        forName: ProfileImageService.DidChangeNotification,
-                        object: nil,
-                        queue: .main
-                    ) { [weak self] _ in
-                        guard let self = self else { return }
-                        self.updateAvatar()
-                    }
-                updateAvatar()
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
     }
-
+    
     private func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,

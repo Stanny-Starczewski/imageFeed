@@ -1,5 +1,4 @@
 import UIKit
-import ProgressHUD
 
 final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
@@ -64,10 +63,10 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+        UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchOAuthToken(code)
-            UIBlockingProgressHUD.show()
         }
     }
     
@@ -79,12 +78,11 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.oauth2TokenStorage.token = token
                 self.fetchProfile(token: token)
             case .failure (let error):
-                UIBlockingProgressHUD.dismiss()
                 self.showAlert(with: error)
                 break
             }
+            UIBlockingProgressHUD.dismiss()
         }
-        UIBlockingProgressHUD.dismiss()
     }
     
     private func fetchProfile(token: String) {
@@ -107,8 +105,8 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     private func showAlert(with error: Error) {
         let alert = UIAlertController(
-            title: "Something went wrong",
-            message: "Failed to login. Check your internet connection",
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true, completion: nil)
