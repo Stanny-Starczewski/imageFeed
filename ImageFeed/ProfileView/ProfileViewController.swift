@@ -11,6 +11,7 @@ class ProfileViewController: UIViewController {
         let imageView = UIImageView(image: profileImage)
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
