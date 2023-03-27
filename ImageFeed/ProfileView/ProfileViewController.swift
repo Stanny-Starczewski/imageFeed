@@ -1,11 +1,16 @@
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
-    
+    private let storageToken = OAuth2TokenStorage()
+    private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "Novikova_Profile")
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -52,6 +57,9 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         configureViews()
         configureConstraints()
+        updateProfileDetails(profile: profileService.profile!)
+        updateAvatar()
+        observeAvatarChanges()
     }
     
     private func configureViews() {
@@ -86,5 +94,45 @@ class ProfileViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+}
+// MARK: - Update Profile data
+extension ProfileViewController {
+    private func updateProfileDetails(profile: Profile?) {
+        guard let profile = profileService.profile else { return }
+        nameLabel.text = profile.name
+        nicknameLabel.text = profile.loginName
+        textLabel.text = profile.bio
+    }
+}
+
+// MARK: - Notification
+extension ProfileViewController {
+    private func observeAvatarChanges() {
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: imageView.frame.width)
+        imageView.kf.indicatorType = .activity
+        imageView.kf.setImage(with: url,
+                              placeholder: UIImage(named: "person.crop.circle.fill.png"),
+                              options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
+        let cache = ImageCache.default
+        cache.clearDiskCache()
+        cache.clearMemoryCache()
     }
 }
