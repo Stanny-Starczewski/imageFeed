@@ -6,6 +6,7 @@ final class SplashViewController: UIViewController {
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let splashScreenLogo = UIImage(named: "Vector")
+    private let imagesListService = ImagesListService.shared
     
     private lazy var logoImageView : UIImageView = {
         let imageView = UIImageView(image: splashScreenLogo)
@@ -111,4 +112,20 @@ extension SplashViewController: AuthViewControllerDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    private func fetchPhotos(token: String) {
+             imagesListService.fetchPhotosNextPage(token)
+     //        { [weak self] result in
+     //            guard let self = self else { return }
+     //            switch result {
+     //            case .success(_):
+     //                self.imagesListService.fetchPhotosNextPage(token)
+     //               { _ in }
+     //                self.switchToTabBarController()
+     //            case .failure:
+     //                break
+     //            }
+     //            UIBlockingProgressHUD.dismiss()
+     //        }
+         }
 }
