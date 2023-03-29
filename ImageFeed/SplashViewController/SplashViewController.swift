@@ -113,19 +113,4 @@ extension SplashViewController: AuthViewControllerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func fetchPhotos(token: String) {
-             imagesListService.fetchPhotosNextPage(token)
-     //        { [weak self] result in
-     //            guard let self = self else { return }
-     //            switch result {
-     //            case .success(_):
-     //                self.imagesListService.fetchPhotosNextPage(token)
-     //               { _ in }
-     //                self.switchToTabBarController()
-     //            case .failure:
-     //                break
-     //            }
-     //            UIBlockingProgressHUD.dismiss()
-     //        }
-         }
 }
