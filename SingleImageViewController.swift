@@ -1,6 +1,7 @@
 import UIKit
 
 class SingleImageViewController: UIViewController {
+    var largeImageURL: URL?
     var image: UIImage! {
         didSet {
             guard isViewLoaded else {return}

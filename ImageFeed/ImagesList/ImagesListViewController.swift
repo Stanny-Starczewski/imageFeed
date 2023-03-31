@@ -29,13 +29,14 @@ final class ImagesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        
+        UIBlockingProgressHUD.show()
         imagesListServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification,
             object: nil, queue: .main
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.self.updateTableViewAnimated()
+            self.updateTableViewAnimated()
+            UIBlockingProgressHUD.dismiss()
         }
         imagesListService.fetchPhotosNextPage()
     }
@@ -74,7 +75,7 @@ extension ImagesListViewController {
            let imagesURL = URL(string: urlString) {
             cell.cellImage.kf.indicatorType = .activity
             cell.cellImage.kf.setImage(with: imagesURL,
-                                       placeholder: UIImage(named: "scribble")) { [weak self] _ in
+                                       placeholder: UIImage(named: "Stub")) { [weak self] _ in
                 guard let self = self else { return }
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
