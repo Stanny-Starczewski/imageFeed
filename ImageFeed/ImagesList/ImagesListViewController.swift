@@ -6,8 +6,6 @@ final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
-    //private let photosName: [String] = Array(0..<20).map{ "\($0)" }
-    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -20,7 +18,7 @@ final class ImagesListViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     var photos: [Photo] = []
     private let imagesListService = ImagesListService.shared
     
@@ -45,7 +43,7 @@ final class ImagesListViewController: UIViewController {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ImagesListService.DidChangeNotification, object: nil)
     }
-
+    
     private func updateTableViewAnimated() {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
@@ -55,7 +53,7 @@ final class ImagesListViewController: UIViewController {
                 let indexPath = (oldCount..<newCount).map { i in
                     IndexPath(row: i, section: 0)
                 }
-                tableView.insertRows(at: indexPath, with: .automatic)
+                tableView.insertRows(at: indexPath, with: .bottom)
             } completion: { _ in }
         }
     }
@@ -66,63 +64,36 @@ final class ImagesListViewController: UIViewController {
             let indexPath = sender as! IndexPath
             let photo = photos[indexPath.row]
             guard let imageURL = URL(string: photo.largeImageURL!) else { return }
-            //            let image = UIImage(named: photosName[indexPath.row])
-            //            viewController.image = image
             viewController.imageURL = imageURL
         }
         else {
             super.prepare(for: segue, sender: sender)
         }
     }
+    
+    // MARK: - Alert
+    
+    private func showLikeErrorAlert(with error: Error) {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так",
+            message: "Действие временно недоступно, попробуйте позднее",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
+
 //MARK: - Extensions
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let photo = photos[indexPath.row]
         guard let imageURL = URL(string: photo.thumbImageURL!) else { return }
-        
-//        let offsetX: CGFloat = 20
-//        let offsetY: CGFloat = 3
-//        let cornerRadius: CGFloat = cell.cellImage.layer.cornerRadius
-//
-//        let gradient = AnimationGradientFactory().createGradient(
-//            width: cell.frame.width - offsetX * 2,
-//            height: cell.frame.height - offsetY * 2,
-//            offsetX: offsetX, offsetY: offsetY, cornerRadius: cornerRadius)
-//        cell.layer.addSublayer(gradient)
-        
         cell.cellImage.kf.indicatorType = .activity
         cell.cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Stub")) { _ in
-//            gradient.removeFromSuperlayer()
         }
-        
-        //let date = dateFormatter.date(from: photo.createdAt ?? Date())
         cell.dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
-        
-        //cell.setIsLiked(isLiked: photo.isLiked)
-//        if let urlString = ImagesListService.shared.photos[indexPath.row].thumbImageURL,
-//           let imagesURL = URL(string: urlString) {
-//            cell.cellImage.kf.indicatorType = .activity
-//            cell.cellImage.kf.setImage(with: imagesURL,
-//                                       placeholder: UIImage(named: "Stub")) { [weak self] _ in
-//                guard let self = self else { return }
-//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//            }
-//
-//            cell.dateLabel.text = dateFormatter.string(from: imagesListService.photos[indexPath.row].createdAt ?? Date())
-            
-            //            let isLiked = indexPath.row % 2 == 0
-            //            let likeImage = isLiked ? UIImage(named: "noActive") : UIImage(named: "YesActive")
-            //            cell.likeOrDislakeButton.setImage(likeImage, for: .normal)
+        cell.setIsLiked(isLiked: photo.isLiked)
         }
-        
-        //        cell.cellImage.image = image
-        //        cell.dateLabel.text = dateFormatter.string(from: Date())
-        //
-        //        let isLiked = indexPath.row % 2 == 0
-        //        let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No Active")
-        //        cell.likeButton.setImage(likeImage, for: .normal)
-        //        cell.selectionStyle = .none
     }
 
 
@@ -143,12 +114,29 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
-extension ImagesListViewController: UITableViewDataSource {
+extension ImagesListViewController: UITableViewDataSource, ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
+            switch result {
+            case.success:
+                self.photos = self.imagesListService.photos
+                cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case.failure(let error):
+                UIBlockingProgressHUD.dismiss()
+                self.showLikeErrorAlert(with: error)
+            }
+        }
+    }
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
     
-    //
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: 0) - 1 {
             imagesListService.fetchPhotosNextPage()
@@ -161,40 +149,11 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        //imageListCell.delegate = self
+        imageListCell.delegate = self
 
         configCell(for: imageListCell, with: indexPath)
         return imageListCell
     }
-    
-//    class AnimationGradientFactory {
-//        static let shared = AnimationGradientFactory()
-//
-//        func createGradient(width: CGFloat, height: CGFloat, offsetX: CGFloat = 0, offsetY: CGFloat = 0, cornerRadius: CGFloat) -> CAGradientLayer {
-//            let gradient = CAGradientLayer()
-//            gradient.frame = CGRect(x: CGFloat(.zero + offsetX), y: CGFloat(.zero + offsetY), width: width, height: height)
-//            gradient.locations = [0, 0.1, 0.3]
-//            gradient.colors = [
-//                UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
-//                UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
-//                UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
-//            ]
-//            gradient.startPoint = CGPoint(x: 0, y: 0.5)
-//            gradient.endPoint = CGPoint(x: 1, y: 0.5)
-//            gradient.cornerRadius = cornerRadius
-//            gradient.masksToBounds = true
-//
-//            let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
-//            gradientChangeAnimation.duration = 1.0
-//            gradientChangeAnimation.repeatCount = .infinity
-//            gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
-//            gradientChangeAnimation.toValue = [0, 0.8, 1]
-//            gradient.add(gradientChangeAnimation, forKey: "locationsChange")
-//
-//            return gradient
-//        }
-//    }
-
 }
 
 
