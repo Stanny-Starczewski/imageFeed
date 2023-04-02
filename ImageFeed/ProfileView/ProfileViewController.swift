@@ -90,13 +90,35 @@ class ProfileViewController: UIViewController {
     }
     @objc
     private func didTapButton() {
-        
+        showLogoutAlert()
+    }
+    
+    private func logout() {
+        OAuth2TokenStorage().clearToken()
+        WebViewViewController.clean()
+        tabBarController?.dismiss(animated: true)
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Invalid Configuration") }
+        window.rootViewController = SplashViewController()
+    }
+    
+    private func showLogoutAlert() {
+        let alert = UIAlertController(
+            title: "Выход из аккаунта",
+            message: "Уверены, что хотите выйти?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] action in
+            guard let self = self else { return }
+            self.logout()
+        }))
+        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
 }
 // MARK: - Update Profile data
 extension ProfileViewController {
