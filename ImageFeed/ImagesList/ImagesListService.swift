@@ -6,8 +6,8 @@ struct PhotoResult: Decodable {
      let welcomeDescription: String?
      let isLiked: Bool?
      let urls: ImageUrlsResult?
-     let width: Int?
-     let height: Int?
+     let width: CGFloat
+     let height: CGFloat
 
      enum CodingKeys: String, CodingKey {
          case id = "id"
@@ -32,7 +32,8 @@ struct PhotoResult: Decodable {
 
  struct Photo {
      let id: String
-     let size: CGSize
+     let width: CGFloat
+     let height: CGFloat
      let createdAt: Date?
      let welcomeDescription: String?
      let thumbImageURL: String?
@@ -98,7 +99,8 @@ struct LikePhotoResult: Decodable {
          let date = dateFormatter.date(from:photoResult.createdAt ?? "")
 
          return Photo.init(id: photoResult.id,
-                           size: CGSize(width: photoResult.width ?? 0, height: photoResult.height ?? 0),
+                           width: CGFloat(photoResult.width),
+                           height: CGFloat(photoResult.height),
                            createdAt: date,
                            welcomeDescription: photoResult.welcomeDescription,
                            thumbImageURL: photoResult.urls?.thumbImageURL,
@@ -121,7 +123,6 @@ struct LikePhotoResult: Decodable {
         task?.cancel()
         
         guard let token = OAuth2TokenStorage().token else { return }
-//        let request = makeLikeRequest(token: token, photoId: photoId, isLike: isLike)
         var request: URLRequest?
         if isLike {
             request = deleteLikeRequest(token, photoId: photoId)
@@ -140,7 +141,8 @@ struct LikePhotoResult: Decodable {
                     let photo = self.photos[index]
                     let newPhoto = Photo(
                         id: photo.id,
-                        size: photo.size,
+                        width: photo.width,
+                        height: photo.height,
                         createdAt: photo.createdAt,
                         welcomeDescription: photo.welcomeDescription,
                         thumbImageURL: photo.thumbImageURL,
@@ -149,7 +151,6 @@ struct LikePhotoResult: Decodable {
                     )
                     self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
                 }
-                print("isLiked = \(String(describing: isLiked))")
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -178,13 +179,6 @@ struct LikePhotoResult: Decodable {
          requestDelete.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
          return requestDelete
      }
-//    private func makeLikeRequest(token: String, photoId: String, isLike: Bool) -> URLRequest {
-//        guard let url = URL(string: "\(APIConstants.defaultBaseURL)" + "photos/\(photoId)/like") else { fatalError("Failed to create URL") }
-//        var request = URLRequest(url: url)
-//        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-//        request.httpMethod = isLike ? "POST" : "DELETE"
-//        return request
-//    }
 }
 
 extension Array {

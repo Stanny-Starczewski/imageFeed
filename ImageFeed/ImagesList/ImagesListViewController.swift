@@ -71,7 +71,7 @@ final class ImagesListViewController: UIViewController {
         }
     }
     
-    // MARK: - Alert
+//MARK: - Alert
     
     private func showLikeErrorAlert(with error: Error) {
         let alert = UIAlertController(
@@ -87,7 +87,7 @@ final class ImagesListViewController: UIViewController {
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let photo = photos[indexPath.row]
-        guard let imageURL = URL(string: photo.thumbImageURL!) else { return }
+        guard let imageURL = URL(string: photo.largeImageURL!) else { return }
         cell.cellImage.kf.indicatorType = .activity
         cell.cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Stub")) { _ in
         }
@@ -104,13 +104,10 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let imageHeight = imagesListService.photos[indexPath.row].size.height
-        let imageWidth = imagesListService.photos[indexPath.row].size.width
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = imageHeight * scale + imageInsets.top + imageInsets.bottom
-        return cellHeight
+        let cell = photos[indexPath.row]
+        let imageSize = CGSize(width: cell.width, height: cell.height)
+        let aspectRatio = imageSize.width / imageSize.height
+        return tableView.frame.width / aspectRatio
     }
 }
 
