@@ -21,6 +21,7 @@ final class ImagesListViewController: UIViewController {
     
     var photos: [Photo] = []
     private let imagesListService = ImagesListService.shared
+    private let animationGradient = Animation.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,8 +89,20 @@ extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let photo = photos[indexPath.row]
         guard let imageURL = URL(string: photo.largeImageURL!) else { return }
+        
+        let offsetX: CGFloat = 20
+        let offsetY: CGFloat = 3
+        let cornerRadius: CGFloat = cell.cellImage.layer.cornerRadius
+        let gradient = animationGradient.createGradient(
+            width: cell.frame.width - offsetX * 2,
+            height: cell.frame.height - offsetY * 2,
+            offsetX: offsetX, offsetY: offsetY, cornerRadius: cornerRadius)
+        cell.layer.addSublayer(gradient)
+        
         cell.cellImage.kf.indicatorType = .activity
         cell.cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Stub")) { _ in
+            gradient.removeFromSuperlayer()
+            
         }
         cell.dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
         cell.setIsLiked(isLiked: photo.isLiked)

@@ -6,6 +6,12 @@ class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImage = UIImage(named: "Novikova_Profile")
     private var profileImageServiceObserver: NSObjectProtocol?
+    private let animationGradient = Animation.shared
+    private var gradientView: CAGradientLayer!
+    private var gradientName: CAGradientLayer!
+    private var gradientNick: CAGradientLayer!
+    private var gradientText: CAGradientLayer!
+    private var gradientDescription: CAGradientLayer!
     
     private lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
@@ -13,6 +19,9 @@ class ProfileViewController: UIViewController {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.imageView = imageView
+        gradientView = animationGradient.createGradient(width: 70, height: 70, cornerRadius: 35)
+        self.imageView.layer.addSublayer(gradientView)
         return imageView
     }()
     
@@ -22,6 +31,9 @@ class ProfileViewController: UIViewController {
         nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
         nameLabel.textColor = .ypWhite
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.nameLabel = nameLabel
+        gradientName = animationGradient.createGradient(width: 223, height: 23, cornerRadius: 11.5)
+        self.nameLabel.layer.addSublayer(gradientName)
         return nameLabel
     }()
     
@@ -31,6 +43,9 @@ class ProfileViewController: UIViewController {
         nicknameLabel.font = UIFont.systemFont(ofSize: 13)
         nicknameLabel.textColor = .ypGrey
         nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.nicknameLabel = nicknameLabel
+        gradientNick = animationGradient.createGradient(width: 89, height: 18, cornerRadius: 9)
+        self.nicknameLabel.layer.addSublayer(gradientNick)
         return nicknameLabel
     }()
     
@@ -40,6 +55,9 @@ class ProfileViewController: UIViewController {
         textLabel.font = UIFont.systemFont(ofSize: 13)
         textLabel.textColor = .ypWhite
         textLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.textLabel = textLabel
+        gradientText = animationGradient.createGradient(width: 67, height: 18, cornerRadius: 9)
+        self.textLabel.layer.addSublayer(gradientText)
         return textLabel
     }()
     
@@ -94,7 +112,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func logout() {
-        OAuth2TokenStorage().clearToken()
+        storageToken.clearToken()
         WebViewViewController.clean()
         tabBarController?.dismiss(animated: true)
         guard let window = UIApplication.shared.windows.first else {
@@ -127,6 +145,10 @@ extension ProfileViewController {
         nameLabel.text = profile.name
         nicknameLabel.text = profile.loginName
         textLabel.text = profile.bio
+        
+        gradientName.removeFromSuperlayer()
+        gradientNick.removeFromSuperlayer()
+        gradientText.removeFromSuperlayer()
     }
 }
 
@@ -157,5 +179,6 @@ extension ProfileViewController {
         let cache = ImageCache.default
         cache.clearDiskCache()
         cache.clearMemoryCache()
+        gradientView.removeFromSuperlayer()
     }
 }
