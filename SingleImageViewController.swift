@@ -28,7 +28,7 @@ class SingleImageViewController: UIViewController {
         return .lightContent
     }
     
-    override func  viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setImage()
         scrollView.minimumZoomScale = 0.1
@@ -43,7 +43,7 @@ class SingleImageViewController: UIViewController {
             case .success(let imageResult):
                 self.rescaleAndCenterImageInScrollView(image: imageResult.image)
             case .failure:
-                self.displayAlert()
+                self.showAlert()
             }
             UIBlockingProgressHUD.dismiss()
         }
@@ -61,7 +61,7 @@ extension SingleImageViewController: UIScrollViewDelegate {
         let hScale = visibleRectSize.width / imageSize.width
         let vScale = visibleRectSize.width / imageSize.height
         let scale = min(maxZoomScale, max(minZoomScale, max(hScale, vScale)))
-        scrollView.setZoomScale(scale, animated: true)
+        scrollView.setZoomScale(scale, animated: false)
         scrollView.layoutIfNeeded()
         let newContentSize = scrollView.contentSize
         let x = (newContentSize.width - visibleRectSize.width) / 2
@@ -79,18 +79,17 @@ extension SingleImageViewController: UIScrollViewDelegate {
         scrollView.contentInset = UIEdgeInsets(top: offsetY, left: offsetX, bottom: 0, right: 0)
     }
     
-    private func displayAlert() {
+    private func showAlert() {
         let alert = UIAlertController(
-            title: "Что-то пошло не так",
+            title: "Что-то пошло не так(",
             message: "Попробовать ещё раз?",
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "Не надо", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: { action in
             self.setImage()
         }))
         present(alert, animated: true, completion: nil)
-        
     }
 }

@@ -52,9 +52,18 @@ struct LikePhotoResult: Decodable {
      private var lastLoadedPage: Int?
      private let perPage = "10"
      private var task: URLSessionTask?
+     private let storageToken = OAuth2TokenStorage()
+     private let dateFormatter = ISO8601DateFormatter()
      
      func updatePhotos(_ photos: [Photo]) {
          self.photos = photos
+     }
+     
+     func clean() {
+         photos = []
+         lastLoadedPage = nil
+         task?.cancel()
+         task = nil
      }
  }
 
@@ -65,12 +74,11 @@ struct LikePhotoResult: Decodable {
          guard task == nil else { return }
 
          let page = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
-         guard let token = OAuth2TokenStorage().token else { return }
+         guard let token = storageToken.token else { return }
          guard let request = fetchImagesListRequest(token, page: String(page), perPage: perPage) else { return }
          let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
              DispatchQueue.main.async {
                  guard let self = self else { return }
-                 self.task = nil
                  switch result {
                  case .success(let photoResults):
                      for photoResult in photoResults {
@@ -85,23 +93,19 @@ struct LikePhotoResult: Decodable {
                  case .failure(let error):
                      assertionFailure("Ошибка получения изображений \(error)")
                  }
+                 self.task = nil
              }
          }
          self.task = task
          task.resume()
-
      }
 
      private func convert(_ photoResult: PhotoResult) -> Photo {
-         let dateFormatter = DateFormatter()
-         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-         let date = dateFormatter.date(from:photoResult.createdAt ?? "")
 
          return Photo.init(id: photoResult.id,
                            width: CGFloat(photoResult.width),
                            height: CGFloat(photoResult.height),
-                           createdAt: date,
+                           createdAt: self.dateFormatter.date(from:photoResult.createdAt ?? ""),
                            welcomeDescription: photoResult.welcomeDescription,
                            thumbImageURL: photoResult.urls?.thumbImageURL,
                            largeImageURL: photoResult.urls?.largeImageURL,
@@ -122,7 +126,7 @@ struct LikePhotoResult: Decodable {
         assert(Thread.isMainThread)
         task?.cancel()
         
-        guard let token = OAuth2TokenStorage().token else { return }
+        guard let token = storageToken.token else { return }
         var request: URLRequest?
         if isLike {
             request = deleteLikeRequest(token, photoId: photoId)
@@ -161,7 +165,7 @@ struct LikePhotoResult: Decodable {
     }
      
      private func postLikeRequest(_ token: String, photoId: String) -> URLRequest? {
-         guard let url = URL(string: "https://api.unsplash.com") else { return nil }
+         guard let url = URL(string: "\(APIConstants.defaultBaseURL)" ) else { return nil }
          var requestPost = URLRequest.makeHTTPRequest(
              path: "photos/\(photoId)/like",
              httpMethod: "POST",
@@ -171,7 +175,7 @@ struct LikePhotoResult: Decodable {
      }
      
      private func deleteLikeRequest(_ token: String, photoId: String) -> URLRequest? {
-         guard let url = URL(string: "https://api.unsplash.com") else { return nil }
+         guard let url = URL(string: "\(APIConstants.defaultBaseURL)") else { return nil }
          var requestDelete = URLRequest.makeHTTPRequest(
              path: "photos/\(photoId)/like",
              httpMethod: "DELETE",

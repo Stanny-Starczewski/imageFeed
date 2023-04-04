@@ -94,7 +94,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func logout() {
-        OAuth2TokenStorage().clearToken()
+        storageToken.clearToken()
         WebViewViewController.clean()
         tabBarController?.dismiss(animated: true)
         guard let window = UIApplication.shared.windows.first else {
@@ -104,7 +104,7 @@ class ProfileViewController: UIViewController {
     
     private func showLogoutAlert() {
         let alert = UIAlertController(
-            title: "Выход из аккаунта",
+            title: "Пока, пока!",
             message: "Уверены, что хотите выйти?",
             preferredStyle: .alert
         )
@@ -145,6 +145,7 @@ extension ProfileViewController {
     }
     
     private func updateAvatar() {
+        view.backgroundColor = .ypBlack
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
