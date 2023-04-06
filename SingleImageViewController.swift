@@ -30,9 +30,9 @@ class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setImage()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
+        setImage()
     }
     
     private func setImage() {
@@ -59,7 +59,7 @@ extension SingleImageViewController: UIScrollViewDelegate {
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
         let hScale = visibleRectSize.width / imageSize.width
-        let vScale = visibleRectSize.width / imageSize.height
+        let vScale = visibleRectSize.height / imageSize.height
         let scale = min(maxZoomScale, max(minZoomScale, max(hScale, vScale)))
         scrollView.setZoomScale(scale, animated: false)
         scrollView.layoutIfNeeded()
@@ -86,8 +86,8 @@ extension SingleImageViewController: UIScrollViewDelegate {
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Не надо", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { action in
             self.setImage()
         }))
         present(alert, animated: true, completion: nil)
