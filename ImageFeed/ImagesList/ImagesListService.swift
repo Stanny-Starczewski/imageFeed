@@ -113,11 +113,10 @@ struct LikePhotoResult: Decodable {
      }
 
      private func fetchImagesListRequest(_ token: String, page: String, perPage: String) -> URLRequest? {
-         guard let url = URL(string: "\(APIConstants.defaultBaseURL)") else { return nil }
          var request = URLRequest.makeHTTPRequest(
              path: "/photos?page=\(page)&&per_page=\(perPage)",
              httpMethod: "GET",
-             baseURL: url)
+             baseURL: URL(string: "\(APIConstants.defaultBaseURL)")!)
              request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
          return request
      }
@@ -165,21 +164,19 @@ struct LikePhotoResult: Decodable {
     }
      
      private func postLikeRequest(_ token: String, photoId: String) -> URLRequest? {
-         guard let url = URL(string: "\(APIConstants.defaultBaseURL)" ) else { return nil }
          var requestPost = URLRequest.makeHTTPRequest(
              path: "photos/\(photoId)/like",
              httpMethod: "POST",
-             baseURL: url)
+             baseURL: URL(string: "\(APIConstants.defaultBaseURL)")!)
          requestPost.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
          return requestPost
      }
      
      private func deleteLikeRequest(_ token: String, photoId: String) -> URLRequest? {
-         guard let url = URL(string: "\(APIConstants.defaultBaseURL)") else { return nil }
          var requestDelete = URLRequest.makeHTTPRequest(
              path: "photos/\(photoId)/like",
              httpMethod: "DELETE",
-             baseURL: url)
+             baseURL: URL(string: "\(APIConstants.defaultBaseURL)")!)
          requestDelete.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
          return requestDelete
      }

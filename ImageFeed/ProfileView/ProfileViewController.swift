@@ -96,6 +96,7 @@ class ProfileViewController: UIViewController {
     private func logout() {
         storageToken.clearToken()
         WebViewViewController.clean()
+        cleanServicesData()
         tabBarController?.dismiss(animated: true)
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Invalid Configuration") }
@@ -118,6 +119,12 @@ class ProfileViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    private func cleanServicesData() {
+        ImagesListService.shared.clean()
+        ProfileService.shared.clean()
+        ProfileImageService.shared.clean()
     }
 }
 // MARK: - Update Profile data

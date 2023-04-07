@@ -23,7 +23,6 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        imagesListService.fetchPhotosNextPage()
         imagesListServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification,
             object: nil,
@@ -31,6 +30,7 @@ final class ImagesListViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateTableViewAnimated()
             }
+        imagesListService.fetchPhotosNextPage()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -76,10 +76,17 @@ extension ImagesListViewController {
             self.tableView.reloadRows(at: [IndexPath], with: .automatic)
             cell.cellImage.kf.indicatorType = .none
         }
-        cell.dateLabel.text = dateFormatter.string(from: photos[IndexPath.row].createdAt ?? Date())
-        cell.setIsLiked(isLiked: photos[IndexPath.row].isLiked)
+        if let date = imagesListService.photos[IndexPath.row].createdAt {
+            cell.dateLabel.text = dateFormatter.string(from: date)
+        } else {
+            cell.dateLabel.text = ""
+        }
+        let isLiked = imagesListService.photos[IndexPath.row].isLiked == false
+        let likeImage = isLiked ? UIImage(named: "No Active") : UIImage(named: "Active")
+        cell.likeButton.setImage(likeImage, for: .normal)
+        cell.selectionStyle = .none
     }
-    }
+}
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -92,6 +99,12 @@ extension ImagesListViewController: UITableViewDelegate {
         let imageSize = CGSize(width: cell.width, height: cell.height)
         let aspectRatio = imageSize.width / imageSize.height
         return tableView.frame.width / aspectRatio
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == imagesListService.photos.count {
+            imagesListService.fetchPhotosNextPage()
+        }
     }
 }
 

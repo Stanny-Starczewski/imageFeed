@@ -9,6 +9,12 @@ final class ProfileService {
      private enum NetworkError: Error {
          case codeError
      }
+    
+    func clean() {
+        profile = nil
+        task?.cancel()
+        task = nil
+    }
 
      func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
          assert(Thread.isMainThread)
