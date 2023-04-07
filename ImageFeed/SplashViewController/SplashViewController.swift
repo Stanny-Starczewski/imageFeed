@@ -6,6 +6,7 @@ final class SplashViewController: UIViewController {
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let splashScreenLogo = UIImage(named: "Vector")
+    private let imagesListService = ImagesListService.shared
     
     private lazy var logoImageView : UIImageView = {
         let imageView = UIImageView(image: splashScreenLogo)
@@ -111,4 +112,5 @@ extension SplashViewController: AuthViewControllerDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true, completion: nil)
     }
+    
 }

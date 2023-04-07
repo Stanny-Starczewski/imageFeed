@@ -68,6 +68,9 @@
                                                     <rect key="frame" x="337" y="14" width="30" height="26"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="Active"/>
+                                                    <connections>
+                                                        <action selector="likeButtonTapped:" destination="CHB-W8-hvW" eventType="touchUpInside" id="jww-9V-h9D"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -128,7 +131,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fl7-Tp-M4E">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="414" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-di-blx">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="414" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-di-blx">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                         <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
@@ -167,7 +170,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d5r-u7-e8B"/>
-                        <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="fl7-Tp-M4E" firstAttribute="top" secondItem="Aep-GS-yqk" secondAttribute="top" id="6Gt-fh-qf3"/>
                             <constraint firstItem="2oH-t5-dAD" firstAttribute="leading" secondItem="d5r-u7-e8B" secondAttribute="leading" constant="8" id="Bqb-Dt-WhH"/>
