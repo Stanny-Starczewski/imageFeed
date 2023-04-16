@@ -5,8 +5,9 @@ final class ProfileTests: XCTestCase {
     
     func testViewControllerCallsViewDidLoad() {
         // given
+        let profileService = ProfileService()
         let viewController = ProfileViewController()
-        let presenter = ProfilePresenterSpy()
+        let presenter = ProfilePresenterSpy(profileService: profileService)
         viewController.presenter = presenter
         presenter.view = viewController
         // when
@@ -19,7 +20,7 @@ final class ProfileTests: XCTestCase {
     func testGetUrlForProfileImage() {
         //given
         let profileService = ProfileService()
-        let presenter = ProfilePresenterSpy()
+        let presenter = ProfilePresenterSpy(profileService: profileService)
         
         //when
         let url = presenter.getUrlForProfileImage()?.absoluteString
@@ -31,7 +32,7 @@ final class ProfileTests: XCTestCase {
     func testExitFromProfile() {
         //given
         let profileService = ProfileService()
-        let presenter = ProfilePresenterSpy()
+        let presenter = ProfilePresenterSpy(profileService: profileService)
         let view = ProfileViewControllerSpy(presenter: presenter)
         view.presenter = presenter
         presenter.view = view
@@ -46,7 +47,7 @@ final class ProfileTests: XCTestCase {
     func testLoadProfileInfo() {
         //given
         let profileService = ProfileService()
-        let presenter = ProfilePresenterSpy()
+        let presenter = ProfilePresenterSpy(profileService: profileService)
         let view = ProfileViewControllerSpy(presenter: presenter)
         view.presenter = presenter
         presenter.view = view
