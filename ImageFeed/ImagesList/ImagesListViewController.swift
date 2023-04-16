@@ -1,9 +1,14 @@
 import UIKit
 import Kingfisher
 
-final class ImagesListViewController: UIViewController {
+protocol ImagesListViewControllerProtocol: AnyObject {
+    var presenter: ImagesListPresenterProtocol { get set }
+    func updateTableViewAnimated()
+}
+
+final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    private var imagesListServiceObserver: NSObjectProtocol?
+    //private var imagesListServiceObserver: NSObjectProtocol?
     private let imagesListService = ImagesListService.shared
     var photos: [Photo] = []
 
@@ -14,6 +19,10 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
     
+    lazy var presenter: ImagesListPresenterProtocol = {
+        return ImagesListPresenter()
+    } ()
+    
     @IBOutlet private var tableView: UITableView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -23,14 +32,16 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        imagesListServiceObserver = NotificationCenter.default.addObserver(
-            forName: ImagesListService.DidChangeNotification,
-            object: nil,
-            queue: .main) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateTableViewAnimated()
-            }
-        imagesListService.fetchPhotosNextPage()
+//        imagesListServiceObserver = NotificationCenter.default.addObserver(
+//            forName: ImagesListService.DidChangeNotification,
+//            object: nil,
+//            queue: .main) { [weak self] _ in
+//                guard let self = self else { return }
+//                self.updateTableViewAnimated()
+//            }
+//        imagesListService.fetchPhotosNextPage()
+        presenter.view = self
+        presenter.viewDidLoad()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -38,7 +49,7 @@ final class ImagesListViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: ImagesListService.DidChangeNotification, object: nil)
     }
     
-    private func updateTableViewAnimated() {
+    internal func updateTableViewAnimated() {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
         photos = imagesListService.photos

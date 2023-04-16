@@ -10,6 +10,7 @@ final class ProfileTests: XCTestCase {
         let presenter = ProfilePresenterSpy(profileService: profileService)
         viewController.presenter = presenter
         presenter.view = viewController
+        
         // when
         _ = viewController.view
         

@@ -10,6 +10,10 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
 
     var profileService: ImageFeed.ProfileService
     
+    init (profileService: ProfileService ) {
+        self.profileService = profileService
+    }
+    
     func updateProfileDetails(profile: Profile?) {
         view?.configureViews()
         view?.configureConstraints()
@@ -37,9 +41,5 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     
     func makeAlert() -> UIAlertController {
         UIAlertController()
-    }
-    
-    init (profileService: ProfileService ) {
-        self.profileService = profileService
     }
 }
