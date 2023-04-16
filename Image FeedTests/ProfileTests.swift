@@ -1,0 +1,61 @@
+@testable import ImageFeed
+import XCTest
+
+final class ProfileTests: XCTestCase {
+    
+    func testViewControllerCallsViewDidLoad() {
+        // given
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        // when
+        _ = viewController.view
+        
+        // then
+        XCTAssertTrue(presenter.viewDidLoadCalled)
+    }
+    
+    func testGetUrlForProfileImage() {
+        //given
+        let profileService = ProfileService()
+        let presenter = ProfilePresenterSpy()
+        
+        //when
+        let url = presenter.getUrlForProfileImage()?.absoluteString
+        
+        //then
+        XCTAssertEqual(url, "\(APIConstants.baseURL)")
+    }
+    
+    func testExitFromProfile() {
+        //given
+        let profileService = ProfileService()
+        let presenter = ProfilePresenterSpy()
+        let view = ProfileViewControllerSpy(presenter: presenter)
+        view.presenter = presenter
+        presenter.view = view
+        
+        //when
+        view.showAlert()
+        
+        //then
+        XCTAssertTrue(presenter.didExitCalled)
+    }
+    
+    func testLoadProfileInfo() {
+        //given
+        let profileService = ProfileService()
+        let presenter = ProfilePresenterSpy()
+        let view = ProfileViewControllerSpy(presenter: presenter)
+        view.presenter = presenter
+        presenter.view = view
+        
+        //when
+        view.configureViews()
+        
+        //then
+        XCTAssertTrue(view.views)
+    }
+}
+
