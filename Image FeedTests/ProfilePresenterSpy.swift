@@ -4,7 +4,7 @@ import UIKit
 final class ProfilePresenterSpy: ProfilePresenterProtocol {
     var viewDidLoadCalled: Bool = false
     var view: ProfileViewControllerProtocol?
-    var didExitCalled: Bool = false
+    var didLogoutCalled: Bool = false
     var clean: Bool = false
     var observe: Bool = false
 
@@ -12,6 +12,7 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     
     func updateProfileDetails(profile: Profile?) {
         view?.configureViews()
+        view?.configureConstraints()
     }
     
     func observeAvatarChanges() {
@@ -19,7 +20,7 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     }
     
     func logout() {
-         didExitCalled = true
+         didLogoutCalled = true
     }
     
     func cleanServicesData() {

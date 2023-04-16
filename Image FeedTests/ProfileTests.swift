@@ -41,7 +41,7 @@ final class ProfileTests: XCTestCase {
         view.showAlert()
         
         //then
-        XCTAssertTrue(presenter.didExitCalled)
+        XCTAssertTrue(presenter.didLogoutCalled)
     }
     
     func testLoadProfileInfo() {
@@ -53,10 +53,11 @@ final class ProfileTests: XCTestCase {
         presenter.view = view
         
         //when
-        view.configureViews()
+        presenter.updateProfileDetails(profile: profileService.profile)
         
         //then
         XCTAssertTrue(view.views)
+        XCTAssertTrue(view.constraints)
     }
 }
 

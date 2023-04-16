@@ -10,6 +10,7 @@ protocol ProfileViewControllerProtocol: AnyObject {
     func updateAvatar()
     func configureViews()
     func configureConstraints()
+    func showLogoutAlert()
 }
 
 class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
@@ -132,7 +133,7 @@ extension ProfileViewController {
 // MARK: - Exit with Alert
 extension ProfileViewController {
     
-    private func showLogoutAlert() {
+    internal func showLogoutAlert() {
         let alert = presenter.makeAlert()
         present(alert, animated: true, completion: nil)
     }

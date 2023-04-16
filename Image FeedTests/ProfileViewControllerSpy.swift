@@ -2,6 +2,7 @@
 import UIKit
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
+    
     var presenter: ImageFeed.ProfilePresenterProtocol
     
     init (presenter: ProfilePresenterProtocol) {
@@ -15,6 +16,7 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     var update: Bool = false
     var views: Bool = false
     var constraints: Bool = false
+    var alert: Bool = false
     
     func updateAvatar() {
         update = true
@@ -30,5 +32,9 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     
     func showAlert() {
         presenter.logout()
+    }
+    
+    func showLogoutAlert() {
+        alert = true
     }
 }

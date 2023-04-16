@@ -11,6 +11,7 @@ protocol ProfilePresenterProtocol {
     func logout()
     func cleanServicesData()
     func getUrlForProfileImage() -> URL?
+    var profileService: ProfileService { get }
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
@@ -19,7 +20,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     private let webViewViewController = WebViewViewController()
     private let storageToken = OAuth2TokenStorage()
-    private let profileService = ProfileService.shared
+    var profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     
     func viewDidLoad() {
@@ -33,6 +34,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.nameLabel.text = profile.name
         view?.nicknameLabel.text = profile.loginName
         view?.textLabel.text = profile.bio
+        view?.configureViews()
+        view?.configureConstraints()
     }
         
     // MARK: - Notification
