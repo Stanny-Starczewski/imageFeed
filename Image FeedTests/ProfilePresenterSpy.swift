@@ -2,8 +2,8 @@
 import UIKit
 
 final class ProfilePresenterSpy: ProfilePresenterProtocol {
-    var viewDidLoadCalled: Bool = false
     var view: ProfileViewControllerProtocol?
+    var viewDidLoadCalled: Bool = false
     var didLogoutCalled: Bool = false
     var clean: Bool = false
     var observe: Bool = false
@@ -24,7 +24,7 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     }
     
     func logout() {
-         didLogoutCalled = true
+        didLogoutCalled = true
     }
     
     func cleanServicesData() {
