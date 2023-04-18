@@ -1,13 +1,13 @@
-//@testable import ImageFeed
 import XCTest
 
-final class ImageFeedUITests: XCTestCase {
+final class ImageFeed_UITests: XCTestCase {
     private let app = XCUIApplication()
+    
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launch()
     }
-    
+
     func testAuth() throws {
         app.buttons["Authenticate"].tap()
         
@@ -71,6 +71,4 @@ final class ImageFeedUITests: XCTestCase {
         app.buttons["logoutButton"].tap()
         
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
-    }
-}
-
+    }}

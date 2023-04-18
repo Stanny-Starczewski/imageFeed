@@ -22,7 +22,9 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView.accessibilityIdentifier = "UnsplashWebView"
         webView.navigationDelegate = self
+        webView.accessibilityIdentifier = "UnsplashWebView"
         presenter?.viewDidLoad()
         estimatedProgressObservation = webView.observe(
                      \.estimatedProgress,
@@ -31,6 +33,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
                           guard let self = self else { return }
                           self.presenter?.didUpdateProgressValue(webView.estimatedProgress)
                       })
+        webView.accessibilityIdentifier = "UnsplashWebView"
     }
     
     func setProgressValue(_ newValue: Float) {
