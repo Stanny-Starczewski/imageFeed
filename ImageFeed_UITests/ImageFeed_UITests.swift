@@ -2,10 +2,10 @@ import XCTest
 
 final class ImageFeed_UITests: XCTestCase {
     
-    private let login = "spaceboyua@yahoo.com"
-    private let password = "Barcelona2021"
-    private let userName = "Stas Orel"
-    private let nickname = "@stannyorel"
+    private let login = ""
+    private let password = ""
+    private let userName = ""
+    private let nickname = ""
     
     private let app = XCUIApplication()
     
