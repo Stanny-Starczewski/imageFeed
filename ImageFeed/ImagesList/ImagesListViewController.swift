@@ -42,7 +42,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         NotificationCenter.default.removeObserver(self, name: ImagesListService.DidChangeNotification, object: nil)
     }
     
-    internal func updateTableViewAnimated() {
+    func updateTableViewAnimated() {
         let oldCount = photos.count
         guard let newCount = presenter?.imagesListService.photos.count else { return }
         guard let newPhotos = presenter?.imagesListService.photos else { return }
@@ -108,7 +108,9 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        presenter?.checkCompletedList(indexPath)
+        if let visibleIndexPaths = tableView.indexPathsForVisibleRows, visibleIndexPaths.contains(indexPath) {
+            presenter?.checkCompletedList(indexPath)
+        }
     }
 }
 
@@ -133,7 +135,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
         }
     }
     //MARK: - Alert
-    internal func showLikeErrorAlert(with error: Error)  {
+    func showLikeErrorAlert(with error: Error)  {
         guard let alert = presenter?.makeAlert(with: Error.self as! Error) else { return }
         present(alert, animated: true, completion: nil)
     }

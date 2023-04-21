@@ -24,26 +24,13 @@ struct AuthConfiguration {
     let authorizationPath: String
     let baseURL: URL
     
-    init(accessKey: String, secretKey: String, redirectURI: String, accessScope: String, authURLString: String, defaultBaseURL: URL, code: String, authorizationPath: String, baseURL: URL) {
-        self.accessKey = accessKey
-        self.secretKey = secretKey
-        self.redirectURI = redirectURI
-        self.accessScope = accessScope
-        self.defaultBaseURL = defaultBaseURL
-        self.authURLString = authURLString
-        
-        self.code = code
-        self.authorizationPath = authorizationPath
-        self.baseURL = baseURL
-    }
-    
     static var standard: AuthConfiguration {
         return AuthConfiguration(accessKey: APIConstants.accessKey,
                                  secretKey: APIConstants.secretKey,
                                  redirectURI: APIConstants.redirectURI,
                                  accessScope: APIConstants.accessScope,
-                                 authURLString: APIConstants.authorizeURLString,
                                  defaultBaseURL: APIConstants.defaultBaseURL,
+                                 authURLString: APIConstants.authorizeURLString,
                                  
                                  code: APIConstants.code,
                                  authorizationPath: APIConstants.authorizationPath,

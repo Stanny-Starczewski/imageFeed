@@ -1,6 +1,12 @@
 import XCTest
 
 final class ImageFeed_UITests: XCTestCase {
+    
+    private let login = "spaceboyua@yahoo.com"
+    private let password = "Barcelona2021"
+    private let userName = "Stas Orel"
+    private let nickname = "@stannyorel"
+    
     private let app = XCUIApplication()
     
     override func setUpWithError() throws {
@@ -15,15 +21,15 @@ final class ImageFeed_UITests: XCTestCase {
         XCTAssertTrue(webView.waitForExistence(timeout: 2))
         
         let loginTextField = webView.descendants(matching: .textField).element
-        XCTAssertTrue(webView.waitForExistence(timeout: 2))
+        XCTAssertTrue(webView.waitForExistence(timeout: 4))
         loginTextField.tap()
-        loginTextField.typeText("")
+        loginTextField.typeText(login)
         webView.swipeUp()
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(webView.waitForExistence(timeout: 4))
         passwordTextField.tap()
-        passwordTextField.typeText("")
+        passwordTextField.typeText(password)
         webView.swipeUp()
         
         webView.buttons["Login"].tap()
@@ -63,10 +69,14 @@ final class ImageFeed_UITests: XCTestCase {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
         
-        XCTAssertTrue(app.staticTexts[""].exists)
-        XCTAssertTrue(app.staticTexts[""].exists)
+        XCTAssertTrue(app.staticTexts["\(userName)"].exists)
+        XCTAssertTrue(app.staticTexts["\(nickname)"].exists)
         
         app.buttons["logoutButton"].tap()
         
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
+        sleep(2)
+        
+        let authButton = app.buttons["Authenticate"]
+        XCTAssertTrue(authButton.waitForExistence(timeout: 5))
     }}

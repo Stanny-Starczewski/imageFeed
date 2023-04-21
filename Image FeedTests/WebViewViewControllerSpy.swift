@@ -1,4 +1,4 @@
-import ImageFeed
+@testable import ImageFeed
 import UIKit
 
 final class WebViewViewControllerSpy: WebViewViewControllerProtocol {

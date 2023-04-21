@@ -13,15 +13,15 @@ protocol ProfileViewControllerProtocol: AnyObject {
     func showLogoutAlert()
 }
 
-class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
 
     lazy var presenter: ProfilePresenterProtocol = {
         return ProfilePresenter()
     }()
 
-    internal lazy var profileImage = UIImage(named: "Novikova_Profile")
+    lazy var profileImage = UIImage(named: "Novikova_Profile")
     
-    internal lazy var imageView : UIImageView = {
+    lazy var imageView : UIImageView = {
         let imageView = UIImageView(image: profileImage)
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         return imageView
     }()
     
-    internal lazy var nameLabel : UILabel = {
+    lazy var nameLabel : UILabel = {
         let nameLabel = UILabel()
         nameLabel.text = "Екатерина Новикова"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
@@ -39,7 +39,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         return nameLabel
     }()
     
-    internal lazy var nicknameLabel : UILabel = {
+    lazy var nicknameLabel : UILabel = {
         let nicknameLabel = UILabel()
         nicknameLabel.text = "@ekaterina_nov"
         nicknameLabel.font = UIFont.systemFont(ofSize: 13)
@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         return nicknameLabel
     }()
     
-    internal lazy var textLabel : UILabel = {
+    lazy var textLabel : UILabel = {
         let textLabel = UILabel()
         textLabel.text = "Hello, world!"
         textLabel.font = UIFont.systemFont(ofSize: 13)
@@ -78,7 +78,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         updateAvatar()
     }
     
-    internal func configureViews() {
+    func configureViews() {
         view.addSubview(imageView)
         view.addSubview(nameLabel)
         view.addSubview(nicknameLabel)
@@ -86,7 +86,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         view.addSubview(button)
     }
     
-    internal func configureConstraints() {
+    func configureConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -117,7 +117,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
 // MARK: - Notification
 extension ProfileViewController {
 
-    internal func updateAvatar() {
+    func updateAvatar() {
         view.backgroundColor = .ypBlack
         guard let url = presenter.getUrlForProfileImage() else { return }
         let processor = RoundCornerImageProcessor(cornerRadius: imageView.frame.width)
@@ -133,7 +133,7 @@ extension ProfileViewController {
 // MARK: - Exit with Alert
 extension ProfileViewController {
     
-    internal func showLogoutAlert() {
+    func showLogoutAlert() {
         let alert = presenter.makeAlert()
         present(alert, animated: true, completion: nil)
     }
