@@ -6,28 +6,43 @@ protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
 }
 
-final class WebViewViewController: UIViewController {
+protocol WebViewViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol? { get set }
+    func load(request: URLRequest)
+    func setProgressValue(_ newValue: Float)
+    func setProgressHidden(_ isHidden: Bool)
+}
+
+final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     @IBOutlet private weak var webView: WKWebView!
     @IBOutlet private weak var progressView: UIProgressView!
     private var estimatedProgressObservation: NSKeyValueObservation?
     weak var delegate: WebViewViewControllerDelegate?
+    var presenter: WebViewPresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
-        loadWebView()
+        presenter?.viewDidLoad()
         estimatedProgressObservation = webView.observe(
                      \.estimatedProgress,
                       options: [],
                       changeHandler: { [weak self] _, _ in
                           guard let self = self else { return }
-                          self.updateProgress()
+                          self.presenter?.didUpdateProgressValue(webView.estimatedProgress)
                       })
     }
     
-    private func updateProgress() {
-        progressView.progress = Float(webView.estimatedProgress)
-        progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+    func setProgressValue(_ newValue: Float) {
+        progressView.progress = newValue
+    }
+    
+    func setProgressHidden(_ isHidden: Bool) {
+        progressView.isHidden = isHidden
+    }
+    
+    func load(request: URLRequest) {
+        webView.load(request)
     }
     
     @IBAction private func didTapBackButton(_ sender: Any) {
@@ -60,27 +75,10 @@ extension WebViewViewController: WKNavigationDelegate {
 }
 
 private extension WebViewViewController {
-    func loadWebView() {
-        var components = URLComponents(string: APIConstants.authorizeURLString)
-        components?.queryItems = [URLQueryItem(name: "client_id", value: APIConstants.accessKey),
-                                  URLQueryItem(name: "redirect_uri", value: APIConstants.redirectURI),
-                                  URLQueryItem(name: "response_type", value: APIConstants.code),
-                                  URLQueryItem(name: "scope", value: APIConstants.accessScope)]
-        if let url = components?.url {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
-    }
-
     func fetchCode(from navigationAction: WKNavigationAction) -> String? {
-        if let url = navigationAction.request.url,
-           let components = URLComponents(string: url.absoluteString),
-           components.path == APIConstants.authorizationPath,
-           let items = components.queryItems,
-           let codeItem = items.first(where: { $0.name == APIConstants.code }) {
-            return codeItem.value
-        } else {
-            return nil
+        if let url = navigationAction.request.url {
+            return presenter?.fetchCode(from: url)
         }
+        return nil
     }
 }
